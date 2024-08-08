@@ -1,10 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import TackerButton from "./TackerButton";
-import { Light } from "./colors";
+import { Light } from "../colors";
 
 export default function TackerNavigation({ navigation, route }) {
     const selected = route.name
-
+    
     return (
         <View style={styles.navigation}>
             <TackerButton

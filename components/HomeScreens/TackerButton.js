@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text } from "react-native";
-import { Dark, Mid } from "./colors";
+import { Dark, Mid } from "../colors";
 
 export default function TackerButton({ label, onPress, selected }) {
     return (
