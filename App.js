@@ -42,13 +42,6 @@ export default function App() {
             tabBarIcon: () => <FontAwesome name="home" size={32} color={Dark} />,
           }}
         />
-        <Tab.Screen
-          name="Add"
-          component={AddScreen}
-          options={{ 
-
-           }}
-        />
       </Tab.Navigator>
       <StatusBar
         style="auto"

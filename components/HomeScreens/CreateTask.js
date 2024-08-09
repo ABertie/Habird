@@ -1,17 +1,15 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, Switch, Text, TextInput, View } from "react-native";
-import { Brand, Dark, Darkest, Light, Lightest, Mid } from "../colors";
-import DateTimePicker from "react-native-ui-datepicker";
-import SelectButton from "../Inputs/SelectButton";
+import { StyleSheet, Switch, Text, TextInput, View } from "react-native";
+import { Dark, Light, Mid } from "../colors";
 import DatePicker from "../Inputs/DatePicker";
 import DoItAt from "../Inputs/DoItAt";
 
 export default function CreateTask() {
     const [name, setName] = useState('')
     const [date, setDate] = useState()
+    const [doItAtSelected, setDoItAtSelected] = useState('Anytime')
     const [reminders, setReminders] = useState()
 
-    const [doItAtSelected, setDoItAtSelected] = useState('Anytime')
     const [reminderOn, setReminderOn] = useState(false)
 
     return (
