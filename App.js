@@ -19,16 +19,20 @@ export default function App() {
         backgroundColor: Lightest,
       }}
       screenOptions={{ 
+        animation: 'shift',
         headerShown: false,
         tabBarShowLabel: false,
         tabBarItemStyle: {
-          backgroundColor: Light,
+          // backgroundColor: Light,
           borderRadius: 99,
           width: 48,
           height: 48,
           alignItems: 'center',
           justifyContent: 'center',
         },
+        tabBarInactiveBackgroundColor: {
+          backgroundColor: Light,
+        }
       }}
       >
         <Tab.Screen

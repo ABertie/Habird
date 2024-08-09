@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import TackerButton from "./TackerButton";
+import SelectButton from "../Inputs/SelectButton";
 import { Light } from "../colors";
 
 export default function TackerNavigation({ navigation, route }) {
@@ -7,17 +7,17 @@ export default function TackerNavigation({ navigation, route }) {
     
     return (
         <View style={styles.navigation}>
-            <TackerButton
+            <SelectButton
                 label="Today"
                 selected={selected === "Today" ? true : false}
                 onPress={() => navigation.navigate('Today')}
             />
-            <TackerButton
+            <SelectButton
                 label="Weekly"
                 selected={selected === "Weekly" ? true : false}
                 onPress={() => navigation.navigate('Weekly')}
             />
-            <TackerButton
+            <SelectButton
                 label="Overall"
                 selected={selected === "Overall" ? true : false}
                 onPress={() => navigation.navigate('Overall')}
