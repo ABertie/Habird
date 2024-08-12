@@ -1,56 +1,107 @@
 import { useState } from "react";
 import { StyleSheet, Switch, Text, TextInput, View } from "react-native";
-import { Dark, Light, Mid } from "../colors";
+import { Controller, useForm } from "react-hook-form";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { Brand, Dark, Light, Mid } from "../colors";
 import DatePicker from "../Inputs/DatePicker";
-import DoItAt from "../Inputs/DoItAt";
+import TimePicker from "../Inputs/TimePicker.js";
+import Submit from "../Inputs/SubmitButton.js";
 
-export default function CreateTask() {
-    const [name, setName] = useState('')
-    const [date, setDate] = useState()
-    const [doItAtSelected, setDoItAtSelected] = useState('Anytime')
-    const [reminders, setReminders] = useState()
-
+export default function CreateTask({ navigation, route }) {
+    const [date, setDate] = useState('')
+    const [reminders, setReminder] = useState()
     const [reminderOn, setReminderOn] = useState(false)
 
+    const values = {
+        StartDate: date,
+        Reminder: reminders,
+        Type: "Task",
+    }
+
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            Name: "",
+            Type: "Task",
+            StartDate: "",
+            Reminder: "",
+        },
+        values,
+    })
+
+    const onSubmit = async (data) => {
+        
+        const name = data.Name.split(" ").join("_")
+        const value = JSON.stringify(data)
+
+        try {
+            await AsyncStorage.setItem(name, value)
+            navigation.navigate('Today')
+        } catch (e) {
+            console.log(e);
+            // save error
+        }
+    }
+
     return (
-        <View>
+        <View style={{ gap: 8, }}>
             <Text style={styles.text}>Task Name</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Task Name"
-                onChangeText={setName}
-                value={name}
+            <Controller
+                control={control}
+                rules={{
+                    required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={onChange}
+                        value={value}
+                    />
+                )}
+                name="Name"
             />
+            {errors.TaskName && <Text style={styles.error}>This is required.</Text>}
             {/* <Text style={styles.text}>Icon</Text> */}
             {/* <Text style={styles.text}>Color</Text> */}
-            <Text style={styles.text}>When</Text>
+            <Text style={styles.text}>Start Date</Text>
             <DatePicker
                 date={date}
                 setDate={setDate}
+                setDefaultDate={true}
             />
-            <Text style={styles.text}>Do it at</Text>
-            <DoItAt
-                doItAtSelected={doItAtSelected}
-                setDoItAtSelected={setDoItAtSelected}
-            />
+            {errors.StartDate && <Text style={styles.error}>This is required.</Text>}
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
             }}>
                 <Text style={styles.text}>Reminder</Text>
-                <Switch
+                {/* <Switch
                     trackColor={{ false: Dark + 'aa', true: Light }}
                     thumbColor={reminderOn ? Mid : Dark}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={() => setReminderOn(!reminderOn)}
                     value={reminderOn}
-                />
+                /> */}
             </View>
-            {reminderOn && <DatePicker
-                date={reminders}
-                setDate={setReminders}
-            />}
+            {/* {reminderOn && <TimePicker
+                time={reminders}
+                setTime={setReminder}
+            />} */}
+            <TimePicker
+                time={reminders}
+                setTime={setReminder}
+                setDefaultTime={true}
+            />
+            {errors.Reminder && <Text style={styles.error}>This is required.</Text>}
+            <Submit
+                label='Save'
+                onPress={handleSubmit(onSubmit)}
+            />
         </View>
     )
 }
@@ -60,7 +111,6 @@ const styles = StyleSheet.create({
         color: Dark,
         fontSize: 16,
         fontWeight: '500',
-        paddingVertical: 8,
     },
     input: {
         padding: 8,
@@ -70,5 +120,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-    }
+    },
+    error: {
+        color: Brand,
+    },
 })

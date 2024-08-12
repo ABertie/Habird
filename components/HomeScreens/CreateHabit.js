@@ -1,12 +1,11 @@
 import { StyleSheet, Switch, Text, TextInput, View } from "react-native";
-import { Dark, Light, Mid } from "../colors";
 import { useState } from "react";
-import DoItAt from "../Inputs/DoItAt";
-import DatePicker from "../Inputs/DatePicker";
+
+import { Dark, Light, Mid } from "../colors";
+import PickDate from "../Inputs/DatePicker";
 
 export default function CreateHabit() {
   const [name, setName] = useState('')
-  const [doItAtSelected, setDoItAtSelected] = useState('Anytime')
   const [reminders, setReminders] = useState()
 
   const [reminderOn, setReminderOn] = useState(false)
@@ -23,11 +22,6 @@ export default function CreateHabit() {
       {/* <Text style={styles.text}>Icon</Text> */}
       {/* <Text style={styles.text}>Color</Text> */}
       <Text style={styles.text}>Repeat</Text>
-      <Text style={styles.text}>Do it at</Text>
-      <DoItAt
-        doItAtSelected={doItAtSelected}
-        setDoItAtSelected={setDoItAtSelected}
-      />
       {/* <Text style={styles.text}>End Habit on</Text> */}
       <View style={{
         flexDirection: 'row',
@@ -43,7 +37,7 @@ export default function CreateHabit() {
           value={reminderOn}
         />
       </View>
-      {reminderOn && <DatePicker
+      {reminderOn && <PickDate
         date={reminders}
         setDate={setReminders}
       />}

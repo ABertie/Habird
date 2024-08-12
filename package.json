@@ -4,8 +4,8 @@
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
@@ -14,14 +14,18 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "expo": "~51.0.24",
+    "expo-dev-client": "~4.0.22",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.52.2",
     "react-native": "0.74.3",
+    "react-native-dynamically-selected-picker": "^3.3.0",
+    "react-native-linear-gradient": "^2.8.3",
     "react-native-safe-area-context": "4.10.5",
     "react-native-screens": "3.31.1",
-    "react-native-ui-datepicker": "^2.0.3",
-    "react-native-web": "~0.19.10"
+    "react-native-web": "~0.19.10",
+    "@react-native-async-storage/async-storage": "1.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

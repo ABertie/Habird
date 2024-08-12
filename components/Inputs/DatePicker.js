@@ -1,17 +1,74 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextInput, View } from "react-native";
-import DateTimePicker from "react-native-ui-datepicker";
-import SelectButton from "./SelectButton";
-import { Dark, Light, Lightest, Mid } from "../colors";
+import DynamicallySelectedPicker from "react-native-dynamically-selected-picker";
+import Feather from '@expo/vector-icons/Feather';
 
-export default function DatePicker({ date, setDate }) {
+import SelectButton from "./SelectButton";
+import { Dark, Darkest, Light, Lightest } from "../colors";
+
+export default function DatePicker({ date, setDate, setDefaultDate = false }) {
+    const [test, setTest] = useState(dateString)
+    const CurrentYear = Number(new Date().getFullYear())
+    const CurrentMonth = Number(new Date().getMonth())
+    const CurrentDay = Number(new Date().getDate())
+    const [year, setYear] = useState(CurrentYear)
+    const [monthNum, setMonthNum] = useState(CurrentMonth + 1)
+    const month = new Date(year, monthNum - 1).toLocaleString('en-US', { month: 'short' })
+    const [day, setDay] = useState(CurrentDay)
+    const dayOfTheWeek = new Date(year, monthNum - 1, day).toLocaleString('en-US', { weekday: 'short' })
     const [picker, setPicker] = useState(false)
+    const dateString = dayOfTheWeek + " " + day + " " + month + " " + year
+
+    const years = []
+    const months = []
+    const days = []
+
+    useEffect(function () {
+        if (setDefaultDate === true) setDate(dateString)
+
+    }, [])
+    
+    for (let i = Number(CurrentYear); i < CurrentYear + 101; i++) {
+        years.push({
+            value: i,
+            label: i,
+        })
+    }
+
+    for (let i = 0; i < 12; i++) {
+        months.push({
+            value: i + 1,
+            label: new Date(year, i).toLocaleString('en-US', { month: 'short' }),
+        })
+    }
+
+    for (let i = 1; i < new Date(year, monthNum, 0).getDate() + 1; i++) {
+        days.push({
+            value: i,
+            label: new Date(year, monthNum, i).getDate(),
+        })
+    }
+
+    function runDay(index) {
+        setDay(days[index].value)
+        setDate(dateString)
+    }
+
+    function runMonth(index) {
+        setMonthNum(months[index].value)
+        setDate(dateString)
+    }
+
+    function runYear(index) {
+        setYear(years[index].value)
+        setDate(dateString)
+    }
 
     return (
         <>
             <View style={{
                 padding: 8,
-                paddingHorizontal: 16,
+                paddingLeft: 16,
                 backgroundColor: Light,
                 borderRadius: 8,
                 flexDirection: 'row',
@@ -26,41 +83,73 @@ export default function DatePicker({ date, setDate }) {
                     value={date}
                 />
                 <SelectButton
-                    style={{ flex: 0 }}
+                    style={{
+                        flex: 0,
+                        borderRadius: 99,
+                    }}
                     selected={true}
-                    label='Select date'
-                    onPress={() => setPicker(!picker)}
+                    label={<Feather name="edit-3" size={16} color={Darkest} />}
+                    onPress={() => {
+                        setPicker(!picker)
+                        setDate(dateString)
+                    }}
                 />
             </View>
             {picker && <>
-                <DateTimePicker
-                    mode="single"
-                    date={date}
-                    onChange={(params) => setDate(params.date)}
-                    timePicker={true}
-                    calendarTextStyle={{
-                        color: Dark,
-                        fontWeight: '500',
-                    }}
-                    headerTextStyle={{
-                        color: Dark,
-                        fontWeight: '500',
-                    }}
-                    headerButtonColor={Dark}
-                    weekdatesTextStyle={{
-                        color: Dark,
-                    }}
-                    selectedTextStyle={{
-                        color: Lightest,
-                    }}
-                    selectedItemColor={Mid}
-                />
-                <SelectButton
+                <View style={{
+                    flexDirection: 'row',
+                }}>
+                    <DynamicallySelectedPicker
+                        items={days}
+                        onScroll={({ index }) => runDay(index)}
+                        onMomentumScrollBegin={({ index }) => runDay(index)}
+                        onMomentumScrollEnd={({ index }) => runDay(index)}
+                        onScrollBeginDrag={({ index }) => runDay(index)}
+                        onScrollEndDrag={({ index }) => runDay(index)}
+                        transparentItemRows={1}
+                        initialSelectedIndex={CurrentDay - 1}
+                        allItemsColor={Dark}
+                        selectedItemBorderColor={Lightest}
+                        height={128}
+                        width={100}
+                    />
+                    <DynamicallySelectedPicker
+                        items={months}
+                        onScroll={({ index }) => runMonth(index)}
+                        onMomentumScrollBegin={({ index }) => runMonth(index)}
+                        onMomentumScrollEnd={({ index }) => runMonth(index)}
+                        onScrollBeginDrag={({ index }) => runMonth(index)}
+                        onScrollEndDrag={({ index }) => runMonth(index)}
+                        transparentItemRows={1}
+                        initialSelectedIndex={CurrentMonth}
+                        allItemsColor={Dark}
+                        selectedItemBorderColor={Lightest}
+                        height={128}
+                        width={100}
+                    />
+                    <DynamicallySelectedPicker
+                        items={years}
+                        onScroll={({ index }) => runYear(index)}
+                        onMomentumScrollBegin={({ index }) => runYear(index)}
+                        onMomentumScrollEnd={({ index }) => runYear(index)}
+                        onScrollBeginDrag={({ index }) => runYear(index)}
+                        onScrollEndDrag={({ index }) => runYear(index)}
+                        transparentItemRows={1}
+                        allItemsColor={Dark}
+                        selectedItemBorderColor={Lightest}
+                        height={128}
+                        width={100}
+                    />
+                </View>
+                {!setDefaultDate && <SelectButton
                     style={{ flex: 0 }}
                     label="Reset date"
                     selected={true}
-                    onPress={() => setDate()}
-                />
+                    onPress={() => {
+                        setDate('')
+                        setPicker(!picker)
+                    }}
+                />}
             </>}
         </>
     )
