@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import HomeScreen from './HomeScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Brand, Dark, Darkest, Light, Mid } from '../colors';
 import Feather from '@expo/vector-icons/Feather';
+import * as Haptics from 'expo-haptics';
+
+import HomeScreen from './HomeScreen';
+import { Brand, Dark, Darkest, Light, Mid } from '../colors';
 
 export default function TodayScreen({ navigation, route }) {
   let keys = []
@@ -29,6 +31,9 @@ export default function TodayScreen({ navigation, route }) {
   }, [])
 
   async function CheckHandler(i) {
+    Haptics.notificationAsync(
+      Haptics.NotificationFeedbackType.Success
+    )
     i.IsDone = true
     try {
       await AsyncStorage.mergeItem(i.Name, JSON.stringify(i))
@@ -39,6 +44,9 @@ export default function TodayScreen({ navigation, route }) {
 
   async function deleteHandler(i) {
     // ! lav en er du sikker dims
+    Haptics.notificationAsync(
+      Haptics.NotificationFeedbackType.Warning
+    )
     try {
       await AsyncStorage.removeItem(i.Name)
     } catch (e) {
