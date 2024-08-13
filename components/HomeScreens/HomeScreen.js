@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, ScrollView, Text } from "react-native";
+import { Pressable, SafeAreaView, Text, View } from "react-native";
 
 import { Dark, Lightest, Mid } from "../colors";
 import TackerNavigation from "./TackerNavgation";
@@ -8,16 +8,15 @@ export default function HomeScreen({ children, style, navigation, route }) {
         <SafeAreaView style={[
             style, {
                 flex: 1,
-                alignItems: 'center',
                 backgroundColor: Lightest,
             }]}>
             <TackerNavigation
                 navigation={navigation}
                 route={route}
             />
-            <ScrollView>
+            <View style={{ paddingVertical: 16, }}>
                 {children}
-            </ScrollView>
+            </View>
             <Pressable
                 onPress={() => navigation.navigate('Add')}
                 style={{

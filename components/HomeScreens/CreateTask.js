@@ -17,6 +17,7 @@ export default function CreateTask({ navigation, route }) {
         StartDate: date,
         Reminder: reminders,
         Type: "Task",
+        IsDone: false,
     }
 
     const {
@@ -29,6 +30,7 @@ export default function CreateTask({ navigation, route }) {
             Type: "Task",
             StartDate: "",
             Reminder: "",
+            IsDone: false,
         },
         values,
     })
