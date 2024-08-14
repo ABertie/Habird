@@ -2,6 +2,7 @@ import { Pressable, SafeAreaView, Text, View } from "react-native";
 
 import { Dark, Lightest, Mid } from "../colors";
 import TackerNavigation from "./TackerNavgation";
+import Weather from "./weather";
 
 export default function HomeScreen({ children, style, navigation, route }) {
     return (
@@ -17,6 +18,7 @@ export default function HomeScreen({ children, style, navigation, route }) {
             <View style={{ paddingVertical: 16, }}>
                 {children}
             </View>
+            <Weather />
             <Pressable
                 onPress={() => navigation.navigate('Add')}
                 style={{

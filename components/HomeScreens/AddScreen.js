@@ -40,8 +40,8 @@ export default function AddScreen({ navigation, route }) {
         nestedScrollEnabled={true}
       > */}
       {selected === 'Habit'
-        ? <CreateHabit navigation={navigation} route={route}/>
-        : <CreateTask navigation={navigation} route={route}/>
+        ? <CreateHabit navigation={navigation} route={route} />
+        : <CreateTask navigation={navigation} route={route} />
       }
       {/* </ScrollView> */}
     </SafeAreaView>
