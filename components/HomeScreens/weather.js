@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { Dark, Light } from "../colors";
+import { Dark, Mid } from "../colors";
 import { Image, Text, View } from "react-native";
 
 axios.defaults.baseURL = "https://api.openweathermap.org/data/2.5"
@@ -107,7 +107,7 @@ export default function Weather() {
                 position: "absolute",
                 bottom: 0,
                 zIndex: 1,
-                backgroundColor: Light,
+                backgroundColor: Mid,
                 borderRadius: 8,
                 padding: 8,
                 alignItems: 'center',

@@ -29,7 +29,6 @@ export default function TackerNavigation({ navigation, route }) {
 
 const styles = StyleSheet.create({
     navigation: {
-        display: 'flex',
         flexDirection: 'row',
         alignItems: 'stretch',
         justifyContent: 'center',
