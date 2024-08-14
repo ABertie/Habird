@@ -4,13 +4,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import HomeStackScreen from './components/Stacks/HomeStack';
-import { Dark, Light, Lightest, Mid } from './components/colors';
-import AddScreen from './components/HomeScreens/AddScreen';
+import { Dark, Light, Lightest } from './components/colors';
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-
   return (
     <NavigationContainer>
       <Tab.Navigator 

@@ -36,7 +36,7 @@ export default function TodayScreen({ navigation, route }) {
     )
     i.IsDone = true
     try {
-      await AsyncStorage.mergeItem(i.Name, JSON.stringify(i))
+      await AsyncStorage.mergeItem(i.Name.split(" ").join("_"), JSON.stringify(i))
     } catch (e) {
     }
     getKeys()
@@ -48,7 +48,7 @@ export default function TodayScreen({ navigation, route }) {
       Haptics.NotificationFeedbackType.Warning
     )
     try {
-      await AsyncStorage.removeItem(i.Name)
+      await AsyncStorage.removeItem(i.Name.split(" ").join("_"))
     } catch (e) {
     }
     getKeys()
@@ -123,11 +123,7 @@ export default function TodayScreen({ navigation, route }) {
         : <View style={{
           width: '100%',
         }}>
-          <Text style={styles.text}> Der er ikke noget her</Text>
-          {/* <Pressable
-            onPress={() => getKeys()}
-            style={styles.buttonEffekt}
-          ><Text style={styles.text}>Reload</Text></Pressable> */}
+          <Text style={styles.text}> Der er ikke noget her</Text>        
         </View>
       }
     </HomeScreen>
