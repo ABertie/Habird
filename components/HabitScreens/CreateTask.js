@@ -3,8 +3,8 @@ import { StyleSheet, Switch, Text, TextInput, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Brand, Dark, Light, Mid } from "../colors";
-import DatePicker from "../Inputs/DatePicker";
+import { Brand, Dark, Light, Mid } from "../colors.js";
+import DatePicker from "../Inputs/DatePicker.js";
 import TimePicker from "../Inputs/TimePicker.js";
 import Submit from "../Inputs/SubmitButton.js";
 
@@ -12,12 +12,15 @@ export default function CreateTask({ navigation, route }) {
     const [date, setDate] = useState('')
     const [reminders, setReminder] = useState()
     const [reminderOn, setReminderOn] = useState(false)
+    const [idDate, setIdDate] = useState('')
 
     const values = {
+        id: idDate + ' ' + reminders, // ! sæt Name in here + ' ' + 'Name'
         StartDate: date,
         Reminder: reminders,
         Type: "Task",
         IsDone: false,
+        // Name: Name,
     }
 
     const {
@@ -26,6 +29,7 @@ export default function CreateTask({ navigation, route }) {
         formState: { errors },
     } = useForm({
         defaultValues: {
+            id: idDate + '' + reminders,
             Name: "",
             Type: "Task",
             StartDate: "",
@@ -74,6 +78,7 @@ export default function CreateTask({ navigation, route }) {
                 date={date}
                 setDate={setDate}
                 setDefaultDate={true}
+                setIdDate={setIdDate}
             />
             {errors.StartDate && <Text style={styles.error}>This is required.</Text>}
             <View style={{
@@ -81,7 +86,7 @@ export default function CreateTask({ navigation, route }) {
                 alignItems: 'center',
                 justifyContent: 'space-between',
             }}>
-                <Text style={styles.text}>Reminder</Text>
+                <Text style={styles.text}>Time</Text>
                 {/* <Switch
                     trackColor={{ false: Dark + 'aa', true: Light }}
                     thumbColor={reminderOn ? Mid : Dark}

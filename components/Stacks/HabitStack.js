@@ -1,33 +1,33 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import TodayScreen from "../HomeScreens/TodayScreen";
-import WeeklyScreen from "../HomeScreens/WeeklyScreen";
-import OverallScreen from "../HomeScreens/OverallScreen";
-import AddScreen from "../HomeScreens/AddScreen";
+import TodayScreen from "../HabitScreens/TodayScreen";
+import WeeklyScreen from "../HabitScreens/WeeklyScreen";
+import OverallScreen from "../HabitScreens/OverallScreen";
+import AddScreen from "../HabitScreens/AddScreen";
 
-const HomeStack = createNativeStackNavigator();
+const HabitStack = createNativeStackNavigator();
 
-export default function HomeStackScreen() {
+export default function HabitStackScreen() {
   return (
-    <HomeStack.Navigator
+    <HabitStack.Navigator
       screenOptions={{ 
         headerShown: false ,
         animation: 'none',
       }}
     >
-      <HomeStack.Screen
+      <HabitStack.Screen
         name="Today"
         component={TodayScreen}
       />
-      <HomeStack.Screen
+      <HabitStack.Screen
         name="Weekly"
         component={WeeklyScreen}
       />
-      <HomeStack.Screen
+      <HabitStack.Screen
         name="Overall"
         component={OverallScreen}
       />
-      <HomeStack.Screen
+      <HabitStack.Screen
         name="Add"
         component={AddScreen}
         options={{
@@ -37,6 +37,6 @@ export default function HomeStackScreen() {
           headerTitle: 'Create new ...',
         }}
       />
-    </HomeStack.Navigator>
+    </HabitStack.Navigator>
   )
 }

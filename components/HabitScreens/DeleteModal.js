@@ -6,7 +6,7 @@ import { Modal, Text, View } from 'react-native';
 import SelectButton from '../Inputs/SelectButton';
 import { Dark, Light, Lightest } from '../colors';
 
-export default function Delete({ i, deleteModal, setDeleteModal, getKeys }) {
+export default function Delete({ i, deleteModal, setDeleteModal, setLoading }) {
 
     async function deleteHandler(i) {
         setDeleteModal(false)
@@ -17,7 +17,7 @@ export default function Delete({ i, deleteModal, setDeleteModal, getKeys }) {
             await AsyncStorage.removeItem(i.Name.split(" ").join("_"))
         } catch (e) {
         }
-        getKeys()
+        setLoading(true)
     }
 
     return (

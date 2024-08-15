@@ -1,10 +1,11 @@
 import { Pressable, SafeAreaView, Text, View } from "react-native";
+import Entypo from '@expo/vector-icons/Entypo';
 
 import { Dark, Lightest, Mid } from "../colors";
 import TackerNavigation from "./TackerNavgation";
 import Weather from "./weather";
 
-export default function HomeScreen({ children, style, navigation, route }) {
+export default function HabitScreen({ children, style, navigation, route }) {
     return (
         <SafeAreaView style={[
             style, {
@@ -30,13 +31,10 @@ export default function HomeScreen({ children, style, navigation, route }) {
                     width: 48,
                     height: 48,
                     borderRadius: 99,
+                    alignItems: 'center',
+                    justifyContent: 'center',
                 }}>
-                <Text style={{
-                    textAlign: 'center',
-                    fontSize: 32,
-                    fontWeight: 300,
-                    color: Dark,
-                }}>+</Text>
+                <Entypo name="add-to-list" size={24} color={Dark} />
             </Pressable>
         </SafeAreaView>
     )

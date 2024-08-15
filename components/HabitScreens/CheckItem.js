@@ -7,7 +7,7 @@ import { useState } from 'react';
 import Delete from './DeleteModal';
 import { Brand, Dark, Darkest, Light, Mid } from '../colors';
 
-export default function CheckItem({ i, done, getKeys }) {
+export default function CheckItem({ i, done, setLoading }) {
     const [deleteModal, setDeleteModal] = useState(false)
 
     async function CheckHandler(i) {
@@ -19,7 +19,7 @@ export default function CheckItem({ i, done, getKeys }) {
             await AsyncStorage.mergeItem(i.Name.split(" ").join("_"), JSON.stringify(i))
         } catch (e) {
         }
-        getKeys()
+        setLoading(true)
     }
 
     return (
@@ -61,7 +61,7 @@ export default function CheckItem({ i, done, getKeys }) {
                 }]}>
                 <Feather name="trash" size={32} color={Dark} />
             </Pressable>}
-            <Delete i={i} deleteModal={deleteModal} setDeleteModal={setDeleteModal} getKeys={getKeys} />
+            <Delete i={i} deleteModal={deleteModal} setDeleteModal={setDeleteModal} setLoading={setLoading} />
         </View>
     )
 }

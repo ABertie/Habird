@@ -6,7 +6,7 @@ import Feather from '@expo/vector-icons/Feather';
 import SelectButton from "./SelectButton";
 import { Dark, Darkest, Light, Lightest } from "../colors";
 
-export default function DatePicker({ date, setDate, setDefaultDate = false }) {
+export default function DatePicker({ date, setDate, setDefaultDate = false, setIdDate }) {
     const [test, setTest] = useState(dateString)
     const CurrentYear = Number(new Date().getFullYear())
     const CurrentMonth = Number(new Date().getMonth())
@@ -18,16 +18,19 @@ export default function DatePicker({ date, setDate, setDefaultDate = false }) {
     const dayOfTheWeek = new Date(year, monthNum - 1, day).toLocaleString('en-US', { weekday: 'short' })
     const [picker, setPicker] = useState(false)
     const dateString = dayOfTheWeek + " " + day + " " + month + " " + year
+    const idDateString = year + ' ' + monthNum < 10 ? '0' + monthNum : monthNum + ' ' + day < 10 ? '0' + day : day
 
     const years = []
     const months = []
     const days = []
 
     useEffect(function () {
-        if (setDefaultDate === true) setDate(dateString)
-
+        if (setDefaultDate === true) {
+            setDate(dateString)
+            setIdDate(idDateString)
+        }
     }, [])
-    
+
     for (let i = Number(CurrentYear); i < CurrentYear + 101; i++) {
         years.push({
             value: i,
@@ -52,16 +55,19 @@ export default function DatePicker({ date, setDate, setDefaultDate = false }) {
     function runDay(index) {
         setDay(days[index].value)
         setDate(dateString)
+        setIdDate(idDateString)
     }
 
     function runMonth(index) {
         setMonthNum(months[index].value)
         setDate(dateString)
+        setIdDate(idDateString)
     }
 
     function runYear(index) {
         setYear(years[index].value)
         setDate(dateString)
+        setIdDate(idDateString)
     }
 
     return (
@@ -92,6 +98,7 @@ export default function DatePicker({ date, setDate, setDefaultDate = false }) {
                     onPress={() => {
                         setPicker(!picker)
                         setDate(dateString)
+                        setIdDate(idDateString)
                     }}
                 />
             </View>

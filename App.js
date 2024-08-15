@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
-import HomeStackScreen from './components/Stacks/HomeStack';
+import HabitStackScreen from './components/Stacks/HabitStack';
 import { Dark, Light, Lightest } from './components/colors';
 
 const Tab = createBottomTabNavigator();
@@ -13,8 +13,8 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator 
       sceneContainerStyle={{
-        padding: 16,
         backgroundColor: Lightest,
+        padding: 16,
       }}
       screenOptions={{ 
         animation: 'shift',
@@ -34,10 +34,10 @@ export default function App() {
       }}
       >
         <Tab.Screen
-          name="Home"
-          component={HomeStackScreen}
+          name="Habit"
+          component={HabitStackScreen}
           options={{ 
-            tabBarIcon: () => <FontAwesome name="home" size={32} color={Dark} />,
+            tabBarIcon: () => <FontAwesome5 name="tasks" size={24} color={Dark} />,
           }}
         />
       </Tab.Navigator>
