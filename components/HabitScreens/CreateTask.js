@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Switch, Text, TextInput, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Brand, Dark, Light, Mid } from "../colors.js";
+import { Brand, Dark, Light } from "../colors.js";
 import DatePicker from "../Inputs/DatePicker.js";
 import TimePicker from "../Inputs/TimePicker.js";
 import Submit from "../Inputs/SubmitButton.js";
@@ -12,26 +12,28 @@ export default function CreateTask({ navigation, route }) {
     const [date, setDate] = useState('')
     const [reminders, setReminder] = useState()
     const [reminderOn, setReminderOn] = useState(false)
-    const [idDate, setIdDate] = useState('')
+    const [name, setName] = useState('')
+    const [SequenceDate, setSequenceDate] = useState('')
 
     const values = {
-        id: idDate + ' ' + reminders, // ! sæt Name in here + ' ' + 'Name'
+        Sequence: SequenceDate + ' ' + reminders + ' ' + name,
+        Name: name,
+        Type: "Task",
         StartDate: date,
         Reminder: reminders,
-        Type: "Task",
         IsDone: false,
-        // Name: Name,
     }
 
     const {
         control,
         handleSubmit,
+        watch,
         formState: { errors },
     } = useForm({
         defaultValues: {
-            id: idDate + '' + reminders,
+            Sequence: "",
             Name: "",
-            Type: "Task",
+            Type: "",
             StartDate: "",
             Reminder: "",
             IsDone: false,
@@ -39,14 +41,17 @@ export default function CreateTask({ navigation, route }) {
         values,
     })
 
+    useEffect(() => {
+        setName(watch("Name"))
+    }, [watch("Name")])
+
     const onSubmit = async (data) => {
-        
         const name = data.Name.split(" ").join("_")
         const value = JSON.stringify(data)
 
         try {
             await AsyncStorage.setItem(name, value)
-            navigation.navigate('Today')
+            navigation.navigate('Today', {reload: true})
         } catch (e) {
             console.log(e);
             // save error
@@ -70,7 +75,7 @@ export default function CreateTask({ navigation, route }) {
                 )}
                 name="Name"
             />
-            {errors.TaskName && <Text style={styles.error}>This is required.</Text>}
+            {errors.Name && <Text style={styles.error}>This is required.</Text>}
             {/* <Text style={styles.text}>Icon</Text> */}
             {/* <Text style={styles.text}>Color</Text> */}
             <Text style={styles.text}>Start Date</Text>
@@ -78,7 +83,7 @@ export default function CreateTask({ navigation, route }) {
                 date={date}
                 setDate={setDate}
                 setDefaultDate={true}
-                setIdDate={setIdDate}
+                setSequenceDate={setSequenceDate}
             />
             {errors.StartDate && <Text style={styles.error}>This is required.</Text>}
             <View style={{
@@ -98,6 +103,7 @@ export default function CreateTask({ navigation, route }) {
             {/* {reminderOn && <TimePicker
                 time={reminders}
                 setTime={setReminder}
+                setDefaultTime={true}
             />} */}
             <TimePicker
                 time={reminders}

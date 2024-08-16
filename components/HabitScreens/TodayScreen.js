@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FlatList, SectionList, StyleSheet, Text, View } from 'react-native';
+import { SectionList, StyleSheet, Text, View } from 'react-native';
 
 import HabitScreen from './HabitScreen';
-import { Dark, Light } from '../colors';
+import { Dark } from '../colors';
 import CheckItem from './CheckItem';
 
 export default function TodayScreen({ navigation, route }) {
@@ -29,20 +29,23 @@ export default function TodayScreen({ navigation, route }) {
       },
     ]
     for (let i = 0; i < keys.length; i++) {
-      const item = await AsyncStorage.getItem(keys[i])
-      JSON.parse(item).IsDone === true ? List[1].data.push(JSON.parse(item)) : List[0].data.push(JSON.parse(item))
+      const item = JSON.parse(await AsyncStorage.getItem(keys[i]))
+      item.IsDone === true ? List[1].data.push(item) : List[0].data.push(item)
     }
-    List[0].data.sort((p1, p2) => (p1.id > p2.id) ? +1 : (p1.id < p2.id) ? -1 : 0)
-    List[1].data.sort((p1, p2) => (p1.id > p2.id) ? +1 : (p1.id < p2.id) ? -1 : 0)
+    const sorter = (a, b) => (a.Sequence > b.Sequence) ? +1 : (a.Sequence < b.Sequence) ? -1 : 0
+    List[0].data.sort(sorter)
+    List[1].data.sort(sorter)
     setList(List)    
   }
 
+  // setLoading(route.params?.reload)
   useEffect(function () {
+    if(route.params?.reload) navigation.setParams({ reload: false })
     getKeys()
     setTimeout(function () {
       setLoading(false)
     }, 100)
-  }, [loading === true])
+  }, [loading === true || route.params?.reload === true])
 
 
   return (
@@ -61,7 +64,6 @@ export default function TodayScreen({ navigation, route }) {
         renderSectionHeader={({ section: { title } }) => (
           <Text style={styles.text}>{title}</Text>
         )}
-        // keyExtractor={item => item.id + ' ' + item.Name}
         renderItem={({ item }) => (item.IsDone === false
           ? <CheckItem i={item} setLoading={setLoading} />
           : <CheckItem i={item} setLoading={setLoading} done={true} />

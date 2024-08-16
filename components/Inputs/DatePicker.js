@@ -6,7 +6,7 @@ import Feather from '@expo/vector-icons/Feather';
 import SelectButton from "./SelectButton";
 import { Dark, Darkest, Light, Lightest } from "../colors";
 
-export default function DatePicker({ date, setDate, setDefaultDate = false, setIdDate }) {
+export default function DatePicker({ date, setDate, setDefaultDate = false, setSequenceDate }) {
     const [test, setTest] = useState(dateString)
     const CurrentYear = Number(new Date().getFullYear())
     const CurrentMonth = Number(new Date().getMonth())
@@ -18,7 +18,7 @@ export default function DatePicker({ date, setDate, setDefaultDate = false, setI
     const dayOfTheWeek = new Date(year, monthNum - 1, day).toLocaleString('en-US', { weekday: 'short' })
     const [picker, setPicker] = useState(false)
     const dateString = dayOfTheWeek + " " + day + " " + month + " " + year
-    const idDateString = year + ' ' + monthNum < 10 ? '0' + monthNum : monthNum + ' ' + day < 10 ? '0' + day : day
+    const idDateString = year + ' ' + (monthNum < 10 ? '0' + monthNum : monthNum) + ' ' + (day < 10 ? '0' + day : day)
 
     const years = []
     const months = []
@@ -27,7 +27,7 @@ export default function DatePicker({ date, setDate, setDefaultDate = false, setI
     useEffect(function () {
         if (setDefaultDate === true) {
             setDate(dateString)
-            setIdDate(idDateString)
+            setSequenceDate(idDateString)
         }
     }, [])
 
@@ -55,19 +55,19 @@ export default function DatePicker({ date, setDate, setDefaultDate = false, setI
     function runDay(index) {
         setDay(days[index].value)
         setDate(dateString)
-        setIdDate(idDateString)
+        setSequenceDate(idDateString)
     }
 
     function runMonth(index) {
         setMonthNum(months[index].value)
         setDate(dateString)
-        setIdDate(idDateString)
+        setSequenceDate(idDateString)
     }
 
     function runYear(index) {
         setYear(years[index].value)
         setDate(dateString)
-        setIdDate(idDateString)
+        setSequenceDate(idDateString)
     }
 
     return (
@@ -98,7 +98,7 @@ export default function DatePicker({ date, setDate, setDefaultDate = false, setI
                     onPress={() => {
                         setPicker(!picker)
                         setDate(dateString)
-                        setIdDate(idDateString)
+                        setSequenceDate(idDateString)
                     }}
                 />
             </View>
