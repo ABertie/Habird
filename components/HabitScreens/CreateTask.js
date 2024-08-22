@@ -15,30 +15,48 @@ export default function CreateTask({ navigation, route }) {
     const [name, setName] = useState('')
     const [SequenceDate, setSequenceDate] = useState('')
 
-    const values = {
-        Sequence: SequenceDate + ' ' + reminders + ' ' + name,
-        Name: name,
-        Type: "Task",
-        StartDate: date,
-        Reminder: reminders,
-        IsDone: false,
-    }
+    // const values = {
+    //     Sequence: SequenceDate + ' ' + reminders + ' ' + name,
+    //     Name: name,
+    //     Type: "Task",
+    //     Date: {
+    //         Start: date,
+    //     },
+    //     Reminder: reminders,
+    //     IsDone: false,
+    // }
+
+    // type FormInputs = {
+    //     username: string
+    //   }
 
     const {
         control,
         handleSubmit,
         watch,
+        setError,
         formState: { errors },
     } = useForm({
         defaultValues: {
-            Sequence: "",
-            Name: "",
-            Type: "",
-            StartDate: "",
-            Reminder: "",
+            Sequence: '',
+            Name: '',
+            Type: "Task",
+            Date: {
+                Start: '',
+            },
+            Reminder: '',
             IsDone: false,
         },
-        values,
+        values: {
+            Sequence: SequenceDate + ' ' + reminders + ' ' + name,
+            Name: name,
+            Type: "Task",
+            Date: {
+                Start: date,
+            },
+            Reminder: reminders,
+            IsDone: false,
+        }
     })
 
     useEffect(() => {
@@ -46,11 +64,26 @@ export default function CreateTask({ navigation, route }) {
     }, [watch("Name")])
 
     const onSubmit = async (data) => {
-        const name = data.Name.split(" ").join("_")
+        const keyName = data.Name.split(" ").join("_")
+
+        let keys = []
+        try {
+          keys = await AsyncStorage.getAllKeys()
+        } catch (e) {
+        // read key error
+        }
+
+        // console.log();
+        keys.includes(keyName) && setError("Name", {
+            type: "custom",
+            message: "Name already exists",
+        })
+        // keys.includes(keyName) && console.log('noo')
+
         const value = JSON.stringify(data)
 
         try {
-            await AsyncStorage.setItem(name, value)
+            await AsyncStorage.setItem(keyName, value)
             navigation.navigate('Today', {reload: true})
         } catch (e) {
             console.log(e);
@@ -75,7 +108,7 @@ export default function CreateTask({ navigation, route }) {
                 )}
                 name="Name"
             />
-            {errors.Name && <Text style={styles.error}>This is required.</Text>}
+            {errors.Name && <Text style={styles.error}>This is required. {errors.Name}</Text>}
             {/* <Text style={styles.text}>Icon</Text> */}
             {/* <Text style={styles.text}>Color</Text> */}
             <Text style={styles.text}>Start Date</Text>
@@ -85,7 +118,7 @@ export default function CreateTask({ navigation, route }) {
                 setDefaultDate={true}
                 setSequenceDate={setSequenceDate}
             />
-            {errors.StartDate && <Text style={styles.error}>This is required.</Text>}
+            {/* {errors.Date.Start && <Text style={styles.error}>This is required.</Text>} */}
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',

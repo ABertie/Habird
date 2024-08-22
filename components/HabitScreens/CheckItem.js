@@ -47,7 +47,7 @@ export default function CheckItem({ i, done, setLoading }) {
                 <Text style={{
                     color: Darkest + 55,
                 }}>
-                    {i.Reminder} {i.StartDate}
+                    {i.Reminder} {i.Date.Start}
                 </Text>
             </View>
             {done && <Pressable
