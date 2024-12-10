@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TodayScreen from "../HabitScreens/TodayScreen";
 import WeeklyScreen from "../HabitScreens/WeeklyScreen";
 import OverallScreen from "../HabitScreens/OverallScreen";
-import AddScreen from "../HabitScreens/AddScreen";
+import AddScreen from "../HabitScreens/add/AddScreen";
 
 const HabitStack = createNativeStackNavigator();
 

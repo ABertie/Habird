@@ -3,7 +3,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 
 import { Dark, Lightest, Mid } from "../colors";
 import TackerNavigation from "./TackerNavgation";
-import Weather from "./weather";
+// import Weather from "../weather";
 
 export default function HabitScreen({ children, style, navigation, route }) {
     return (
@@ -19,7 +19,7 @@ export default function HabitScreen({ children, style, navigation, route }) {
             <View style={{ paddingVertical: 16, }}>
                 {children}
             </View>
-            <Weather />
+            {/* <Weather /> */}
             <Pressable
                 onPress={() => navigation.navigate('Add')}
                 style={{
