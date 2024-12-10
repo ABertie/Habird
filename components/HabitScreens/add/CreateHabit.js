@@ -1,8 +1,8 @@
 import { StyleSheet, Switch, Text, TextInput, View } from "react-native";
 import { useState } from "react";
 
-import { Dark, Light, Mid } from "../colors";
-import PickDate from "../Inputs/DatePicker";
+import { Dark, Light, Mid } from "../../colors";
+import PickDate from "../../Inputs/DatePicker";
 
 export default function CreateHabit() {
   const [name, setName] = useState('')

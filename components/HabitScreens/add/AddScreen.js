@@ -1,8 +1,8 @@
 import { SafeAreaView, View } from 'react-native';
 import { useState } from 'react';
 
-import SelectButton from '../Inputs/SelectButton';
-import { Light, Lightest } from '../colors';
+import SelectButton from '../../Inputs/SelectButton';
+import { Light, Lightest } from '../../colors';
 import CreateHabit from './CreateHabit';
 import CreateTask from './CreateTask';
 
@@ -25,23 +25,27 @@ export default function AddScreen({ navigation, route }) {
         marginBottom: 16,
       }}>
         <SelectButton
-          label="Regular Habit"
+          label="Task"
+          selected={selected === "Task" ? true : false}
+          onPress={() => setSelected('Task')}
+        />
+        <SelectButton
+          label="Habit"
           selected={selected === "Habit" ? true : false}
           onPress={() => setSelected('Habit')}
         />
         <SelectButton
-          label="One-Time Task"
-          selected={selected === "Task" ? true : false}
-          onPress={() => setSelected('Task')}
+          label="Calender"
+          selected={selected === "Calender" ? true : false}
+          onPress={() => setSelected('Calender')}
         />
       </View>
       {/* <ScrollView
         showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}
       > */}
-      {selected === 'Habit'
-        ? <CreateHabit navigation={navigation} route={route} />
-        : <CreateTask navigation={navigation} route={route} />
+      {selected === 'Habit' && <CreateHabit navigation={navigation} route={route} />
+      || selected === 'Task' && <CreateTask navigation={navigation} route={route} />
       }
       {/* </ScrollView> */}
     </SafeAreaView>

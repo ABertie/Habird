@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { Dark, Mid } from "../colors";
+import { Dark, Mid } from "./colors";
 import { Image, Text, View } from "react-native";
 
 axios.defaults.baseURL = "https://api.openweathermap.org/data/2.5"
